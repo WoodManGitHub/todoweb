@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>{% block titile %}{% endblock %}</title>
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tocas-ui/2.3.3/tocas.css">
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/tocas-ui/2.3.3/tocas.js"></script>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	</head>
+	<body>
+		<div class="ts stackable basic menu">
+			<a class="item" href="{% url 'index' %}">
+				<i class="large home icon"></i>
+			</a>
+			<div class="right menu">
+				{% if user.is_authenticated %}
+					<a class="item" href="{% url 'logout' %}">Logout</a>
+				{% else %}
+					<a class="item" href="{% url 'login' %}">Login</a>
+					<a class="item" href="{% url 'signup' %}">Sign Up</a>
+				{% endif %}
+			</div>
+		</div>
+
+			{% block content %}
+			{% endblock %}
+		<div class="ts bottom fixed centered menu">
+			<div class="divider item"></div>
+			{% if user.is_authenticated %}
+				<a class="item" href="{% url 'create' %}">
+					<i class="plus icon"></i>Add Todo
+				</a>
+			{% endif %}
+		</div>
+	</body>
+</html>

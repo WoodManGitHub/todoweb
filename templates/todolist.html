@@ -1,0 +1,55 @@
+{% if user.is_authenticated %}
+<div class="ts stackable grid">
+	<div class="one wide column"></div>
+	<div class="three wide column">
+		<div class="ts vertical menu">
+			<h3 class="ts center aligned header">Tags</h3>
+			<a href="{% url 'index' %}?tag=all" class="{% if tag == 'all' %}active{% endif %} item">All</a>
+			<a href="{% url 'index' %}?tag=completed" class="{% if tag == 'completed' %}active{% endif %} item">Completed</a>
+			<a href="{% url 'index' %}?tag=pending" class="{% if tag == 'pending' %}active{% endif %} item">Pending</a>
+		</div>
+	</div>
+	<div class="one wide column"></div>
+	<div class="ten wide column">
+		<div class="ts segmented middle aligned divided list">
+			{% if not items %}
+				<div class="ts slate">
+					<span class="header">No todos in the list.</span>
+				</div>
+			{% else %}
+				{% for item in items %}
+					<div class="item">
+						<h4 class="content header">
+							{% if item.completed %}
+								<i class="check circle icon"></i>
+							{% endif %}
+							{{ item.title }}
+						</h4>
+						<div class="right floated content">
+							<div class="ts text menu">
+								<a class="item" data-tooltip-position="top center" data-tooltip="Complete" href="{% url 'complete' item.id %}">
+									<i class="check circle icon"></i>
+								</a>
+								<a class="item" data-tooltip-position="top center" data-tooltip="Edit" href="{% url 'edit' item.id %}">
+									<i class="edit icon"></i>
+								</a>
+								<a class="item" data-tooltip-position="top center" data-tooltip="Delete" href="{% url 'delete' item.id %}">
+									<i class="trash icon"></i>
+								</a>
+							</div>
+						</div>
+					</div>
+				{% endfor %}
+			{% endif %}
+		</div>
+	</div>
+</div>
+{% else %}
+<div class="ts basic borderless slate">
+    <span class="header">You need to login or sign up.</span>
+	<div class="ts centered bulleted text menu">
+		<a class="item" href="{% url 'login' %}">Login</a>
+		<a class="item" href="{% url 'signup' %}">Sign Up</a>
+	</div>
+</div>
+{% endif %}
